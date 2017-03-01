@@ -1,0 +1,2 @@
+# github.com/markcheno/go-gin-app
+./main.go:73: undefined: initializeRoutes
