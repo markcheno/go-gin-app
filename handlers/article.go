@@ -1,14 +1,14 @@
-// handlers.article.go
-
 package handlers
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/markcheno/go-gin-app/models"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/markcheno/go-gin-app/models"
 )
 
+// ShowIndexPage render home page
 func ShowIndexPage(c *gin.Context) {
 	articles := models.GetAllArticles()
 
@@ -18,12 +18,14 @@ func ShowIndexPage(c *gin.Context) {
 		"payload": articles}, "index.html")
 }
 
+// ShowArticleCreationPage render create new article page
 func ShowArticleCreationPage(c *gin.Context) {
 	// Call the render function with the name of the template to render
 	render(c, gin.H{
 		"title": "Create New Article"}, "create-article.html")
 }
 
+// GetArticle render article
 func GetArticle(c *gin.Context) {
 	// Check if the article ID is valid
 	if articleID, err := strconv.Atoi(c.Param("article_id")); err == nil {
@@ -46,6 +48,7 @@ func GetArticle(c *gin.Context) {
 	}
 }
 
+// CreateArticle render create article page
 func CreateArticle(c *gin.Context) {
 	// Obtain the POSTed title and content values
 	title := c.PostForm("title")

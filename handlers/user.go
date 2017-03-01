@@ -1,5 +1,3 @@
-// handlers.user.go
-
 package handlers
 
 import (
@@ -11,6 +9,7 @@ import (
 	"github.com/markcheno/go-gin-app/models"
 )
 
+// ShowLoginPage render login page
 func ShowLoginPage(c *gin.Context) {
 	// Call the render function with the name of the template to render
 	render(c, gin.H{
@@ -18,6 +17,7 @@ func ShowLoginPage(c *gin.Context) {
 	}, "login.html")
 }
 
+// PerformLogin handle login
 func PerformLogin(c *gin.Context) {
 	// Obtain the POSTed username and password values
 	username := c.PostForm("username")
@@ -42,6 +42,7 @@ func PerformLogin(c *gin.Context) {
 	}
 }
 
+// GenerateSessionToken create session token
 func GenerateSessionToken() string {
 	// We're using a random 16 character string as the session token
 	// This is NOT a secure way of generating session tokens
@@ -49,6 +50,7 @@ func GenerateSessionToken() string {
 	return strconv.FormatInt(rand.Int63(), 16)
 }
 
+// Logout handle logout
 func Logout(c *gin.Context) {
 	// Clear the cookie
 	c.SetCookie("token", "", -1, "", "", false, true)
@@ -57,12 +59,13 @@ func Logout(c *gin.Context) {
 	c.Redirect(http.StatusTemporaryRedirect, "/")
 }
 
+// ShowRegistrationPage render registration page
 func ShowRegistrationPage(c *gin.Context) {
-	// Call the render function with the name of the template to render
 	render(c, gin.H{
 		"title": "Register"}, "register.html")
 }
 
+// Register render register page
 func Register(c *gin.Context) {
 	// Obtain the POSTed username and password values
 	username := c.PostForm("username")

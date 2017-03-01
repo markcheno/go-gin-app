@@ -1,5 +1,3 @@
-// handlers.user_test.go
-
 package handlers
 
 import (
@@ -25,7 +23,7 @@ func TestShowLoginPageAuthenticated(t *testing.T) {
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/u/login", ensureNotLoggedIn(), showLoginPage)
+	r.GET("/u/login", EnsureNotLoggedIn(), ShowLoginPage)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/u/login", nil)
@@ -46,7 +44,7 @@ func TestShowLoginPageUnauthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/u/login", ensureNotLoggedIn(), showLoginPage)
+	r.GET("/u/login", EnsureNotLoggedIn(), ShowLoginPage)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/u/login", nil)
@@ -76,7 +74,7 @@ func TestLoginAuthenticated(t *testing.T) {
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/login", ensureNotLoggedIn(), performLogin)
+	r.POST("/u/login", EnsureNotLoggedIn(), PerformLogin)
 
 	// Create a request to send to the above route
 	loginPayload := getLoginPOSTPayload()
@@ -104,7 +102,7 @@ func TestLoginUnauthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/login", ensureNotLoggedIn(), performLogin)
+	r.POST("/u/login", EnsureNotLoggedIn(), PerformLogin)
 
 	// Create a request to send to the above route
 	loginPayload := getLoginPOSTPayload()
@@ -139,7 +137,7 @@ func TestLoginUnauthenticatedIncorrectCredentials(t *testing.T) {
 	r := getRouter(true)
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/login", ensureNotLoggedIn(), performLogin)
+	r.POST("/u/login", EnsureNotLoggedIn(), PerformLogin)
 
 	// Create a request to send to the above route
 	loginPayload := getRegistrationPOSTPayload()
@@ -169,7 +167,7 @@ func TestShowRegistrationPageAuthenticated(t *testing.T) {
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/u/register", ensureNotLoggedIn(), showRegistrationPage)
+	r.GET("/u/register", EnsureNotLoggedIn(), ShowRegistrationPage)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/u/register", nil)
@@ -190,7 +188,7 @@ func TestShowRegistrationPageUnauthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/u/register", ensureNotLoggedIn(), showRegistrationPage)
+	r.GET("/u/register", EnsureNotLoggedIn(), ShowRegistrationPage)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/u/register", nil)
@@ -220,7 +218,7 @@ func TestRegisterAuthenticated(t *testing.T) {
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/register", ensureNotLoggedIn(), register)
+	r.POST("/u/register", EnsureNotLoggedIn(), Register)
 
 	// Create a request to send to the above route
 	registrationPayload := getRegistrationPOSTPayload()
@@ -248,7 +246,7 @@ func TestRegisterUnauthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/register", ensureNotLoggedIn(), register)
+	r.POST("/u/register", EnsureNotLoggedIn(), Register)
 
 	// Create a request to send to the above route
 	registrationPayload := getRegistrationPOSTPayload()
@@ -283,7 +281,7 @@ func TestRegisterUnauthenticatedUnavailableUsername(t *testing.T) {
 	r := getRouter(true)
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/register", ensureNotLoggedIn(), register)
+	r.POST("/u/register", EnsureNotLoggedIn(), Register)
 
 	// Create a request to send to the above route
 	registrationPayload := getLoginPOSTPayload()

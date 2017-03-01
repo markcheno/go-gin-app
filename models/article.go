@@ -1,5 +1,3 @@
-// models.article.go
-
 package models
 
 import "errors"

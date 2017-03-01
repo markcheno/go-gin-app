@@ -1,5 +1,3 @@
-// handlers.article_test.go
-
 package handlers
 
 import (
@@ -12,6 +10,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/markcheno/go-gin-app/models"
 )
 
 // Test that a GET request to the home page returns the home page with
@@ -19,7 +19,7 @@ import (
 func TestShowIndexPageUnauthenticated(t *testing.T) {
 	r := getRouter(true)
 
-	r.GET("/", showIndexPage)
+	r.GET("/", ShowIndexPage)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/", nil)
@@ -51,7 +51,7 @@ func TestShowIndexPageAuthenticated(t *testing.T) {
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/", showIndexPage)
+	r.GET("/", ShowIndexPage)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/", nil)
@@ -81,7 +81,7 @@ func TestArticleUnauthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/article/view/:article_id", getArticle)
+	r.GET("/article/view/:article_id", GetArticle)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/article/view/1", nil)
@@ -113,7 +113,7 @@ func TestArticleAuthenticated(t *testing.T) {
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/article/view/:article_id", getArticle)
+	r.GET("/article/view/:article_id", GetArticle)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/article/view/1", nil)
@@ -143,7 +143,7 @@ func TestArticleListJSON(t *testing.T) {
 	r := getRouter(true)
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/", showIndexPage)
+	r.GET("/", ShowIndexPage)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/", nil)
@@ -159,7 +159,7 @@ func TestArticleListJSON(t *testing.T) {
 		if err != nil {
 			return false
 		}
-		var articles []article
+		var articles []models.Article
 		err = json.Unmarshal(p, &articles)
 
 		return err == nil && len(articles) >= 2 && statusOK
@@ -172,7 +172,7 @@ func TestArticleXML(t *testing.T) {
 	r := getRouter(true)
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/article/view/:article_id", getArticle)
+	r.GET("/article/view/:article_id", GetArticle)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/article/view/1", nil)
@@ -188,7 +188,7 @@ func TestArticleXML(t *testing.T) {
 		if err != nil {
 			return false
 		}
-		var a article
+		var a models.Article
 		err = xml.Unmarshal(p, &a)
 
 		return err == nil && a.ID == 1 && len(a.Title) >= 0 && statusOK
@@ -208,7 +208,7 @@ func TestArticleCreationPageAuthenticated(t *testing.T) {
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/article/create", ensureLoggedIn(), showArticleCreationPage)
+	r.GET("/article/create", EnsureLoggedIn(), ShowArticleCreationPage)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/article/create", nil)
@@ -238,7 +238,7 @@ func TestArticleCreationPageUnauthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/article/create", ensureLoggedIn(), showArticleCreationPage)
+	r.GET("/article/create", EnsureLoggedIn(), ShowArticleCreationPage)
 
 	// Create a request to send to the above route
 	req, _ := http.NewRequest("GET", "/article/create", nil)
@@ -262,7 +262,7 @@ func TestArticleCreationAuthenticated(t *testing.T) {
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/article/create", ensureLoggedIn(), createArticle)
+	r.POST("/article/create", EnsureLoggedIn(), CreateArticle)
 
 	// Create a request to send to the above route
 	articlePayload := getArticlePOSTPayload()
@@ -295,7 +295,7 @@ func TestArticleCreationUnauthenticated(t *testing.T) {
 	r := getRouter(true)
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/article/create", ensureLoggedIn(), createArticle)
+	r.POST("/article/create", EnsureLoggedIn(), CreateArticle)
 
 	// Create a request to send to the above route
 	articlePayload := getArticlePOSTPayload()
