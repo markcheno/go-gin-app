@@ -10,6 +10,7 @@ func InitRoutes() *gin.Engine {
 
 	// Use the setUserStatus middleware for every route to set a flag
 	// indicating whether the request was from an authenticated user or not
+	router.LoadHTMLGlob("templates/*")
 	router.Use(SetUserStatus())
 
 	// Handle the index route
