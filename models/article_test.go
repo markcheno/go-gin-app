@@ -24,7 +24,7 @@ func TestGetAllArticles(t *testing.T) {
 	}
 }
 
-// Test the function that fetche an Article by its ID
+// Test the function that fetches an Article by its ID
 func TestGetArticleByID(t *testing.T) {
 	a, err := GetArticleByID(1)
 

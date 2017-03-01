@@ -2,13 +2,14 @@ package models
 
 import "errors"
 
+// Article struct
 type Article struct {
 	ID      int    `json:"id"`
 	Title   string `json:"title"`
 	Content string `json:"content"`
 }
 
-// For this demo, we're storing the article list in memory
+// ArticleList - For this demo, we're storing the article list in memory
 // In a real application, this list will most likely be fetched
 // from a database or from static files
 var ArticleList = []Article{
@@ -16,12 +17,12 @@ var ArticleList = []Article{
 	Article{ID: 2, Title: "Article 2", Content: "Article 2 body"},
 }
 
-// Return a list of all the articles
+// GetAllArticles return a list of all the articles
 func GetAllArticles() []Article {
 	return ArticleList
 }
 
-// Fetch an article based on the ID supplied
+// GetArticleByID fetch an article based on the ID supplied
 func GetArticleByID(id int) (*Article, error) {
 	for _, a := range ArticleList {
 		if a.ID == id {
@@ -31,7 +32,7 @@ func GetArticleByID(id int) (*Article, error) {
 	return nil, errors.New("Article not found")
 }
 
-// Create a new article with the title and content provided
+// CreateNewArticle create a new article with the title and content provided
 func CreateNewArticle(title, content string) (*Article, error) {
 	// Set the ID of a new article to one more than the number of articles
 	a := Article{ID: len(ArticleList) + 1, Title: title, Content: content}

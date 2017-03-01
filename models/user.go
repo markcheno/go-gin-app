@@ -5,12 +5,13 @@ import (
 	"strings"
 )
 
+// User structure
 type User struct {
 	Username string `json:"username"`
 	Password string `json:"-"`
 }
 
-// For this demo, we're storing the user list in memory
+// UserList - For this demo, we're storing the user list in memory
 // We also have some users predefined.
 // In a real application, this list will most likely be fetched
 // from a database. Moreover, in production settings, you should
@@ -22,7 +23,7 @@ var UserList = []User{
 	User{Username: "user3", Password: "pass3"},
 }
 
-// Check if the username and password combination is valid
+// IsUserValid check if the username and password combination is valid
 func IsUserValid(username, password string) bool {
 	for _, u := range UserList {
 		if u.Username == username && u.Password == password {
@@ -32,8 +33,7 @@ func IsUserValid(username, password string) bool {
 	return false
 }
 
-// Register a new user with the given username and password
-// NOTE: For this demo, we
+// RegisterNewUser register a new user with the given username and password
 func RegisterNewUser(username, password string) (*User, error) {
 	if strings.TrimSpace(password) == "" {
 		return nil, errors.New("The password can't be empty")
@@ -48,7 +48,7 @@ func RegisterNewUser(username, password string) (*User, error) {
 	return &u, nil
 }
 
-// Check if the supplied username is available
+// IsUsernameAvailable check if the supplied username is available
 func IsUsernameAvailable(username string) bool {
 	for _, u := range UserList {
 		if u.Username == username {

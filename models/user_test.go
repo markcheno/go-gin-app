@@ -4,6 +4,7 @@ import "testing"
 
 // Test the validity of different combinations of username/password
 func TestUserValidity(t *testing.T) {
+
 	if !IsUserValid("user1", "pass1") {
 		t.Fail()
 	}
@@ -27,6 +28,7 @@ func TestUserValidity(t *testing.T) {
 
 // Test if a new user can be registered with valid username/password
 func TestValidUserRegistration(t *testing.T) {
+
 	saveLists()
 
 	u, err := RegisterNewUser("newuser", "newpass")
@@ -40,6 +42,7 @@ func TestValidUserRegistration(t *testing.T) {
 
 // Test that a new user cannot be registered with invalid username/password
 func TestInvalidUserRegistration(t *testing.T) {
+
 	saveLists()
 
 	// Try to register a user with a used username
