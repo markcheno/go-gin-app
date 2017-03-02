@@ -34,15 +34,6 @@ func main() {
 		userRoutes.POST("/register", m.EnsureNotLoggedIn(), userR.Register)
 	}
 
-	//userRoutes := router.Group("/user")
-	//{
-	//	userRoutes.GET("/login", m.EnsureNotLoggedIn(), userR.ShowLoginPage)
-	//	userRoutes.POST("/login", m.EnsureNotLoggedIn(), userR.PerformLogin)
-	//	userRoutes.GET("/logout", m.EnsureLoggedIn(), userR.Logout)
-	//	userRoutes.GET("/register", m.EnsureNotLoggedIn(), userR.ShowRegistrationPage)
-	//	userRoutes.POST("/register", m.EnsureNotLoggedIn(), userR.Register)
-	//}
-
 	articleRoutes := router.Group("/article")
 	{
 		articleRoutes.GET("/view/:article_id", views.GetArticle)
