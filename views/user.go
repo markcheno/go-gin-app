@@ -15,20 +15,20 @@ func generateSessionToken() string {
 	return strconv.FormatInt(rand.Int63(), 16)
 }
 
-// UserResource -
-type UserResource struct {
+// UserView -
+type UserView struct {
 	DB *models.DB
 }
 
 // ShowLoginPage render login page
-func (u *UserResource) ShowLoginPage(c *gin.Context) {
+func (u *UserView) ShowLoginPage(c *gin.Context) {
 	render(c,
 		gin.H{"title": "Login"},
 		"login.html")
 }
 
 // PerformLogin handle login
-func (u *UserResource) PerformLogin(c *gin.Context) {
+func (u *UserView) PerformLogin(c *gin.Context) {
 
 	username := c.PostForm("username")
 	password := c.PostForm("password")
@@ -51,21 +51,21 @@ func (u *UserResource) PerformLogin(c *gin.Context) {
 }
 
 // Logout handle logout
-func (u *UserResource) Logout(c *gin.Context) {
+func (u *UserView) Logout(c *gin.Context) {
 	// Clear the cookie
 	c.SetCookie("token", "", -1, "", "", false, true)
 	c.Redirect(http.StatusTemporaryRedirect, "/")
 }
 
 // ShowRegistrationPage render registration page
-func (u *UserResource) ShowRegistrationPage(c *gin.Context) {
+func (u *UserView) ShowRegistrationPage(c *gin.Context) {
 	render(c,
 		gin.H{"title": "Register"},
 		"register.html")
 }
 
 // Register render register page
-func (u *UserResource) Register(c *gin.Context) {
+func (u *UserView) Register(c *gin.Context) {
 
 	// Obtain the POSTed username and password values
 	username := c.PostForm("username")

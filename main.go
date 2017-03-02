@@ -17,7 +17,7 @@ func main() {
 		panic(err)
 	}
 
-	userR := &views.UserResource{DB: db}
+	userView := &views.UserView{DB: db}
 
 	router := gin.Default()
 
@@ -27,11 +27,11 @@ func main() {
 
 	userRoutes := router.Group("/user")
 	{
-		userRoutes.GET("/login", m.EnsureNotLoggedIn(), userR.ShowLoginPage)
-		userRoutes.POST("/login", m.EnsureNotLoggedIn(), userR.PerformLogin)
-		userRoutes.GET("/logout", m.EnsureLoggedIn(), userR.Logout)
-		userRoutes.GET("/register", m.EnsureNotLoggedIn(), userR.ShowRegistrationPage)
-		userRoutes.POST("/register", m.EnsureNotLoggedIn(), userR.Register)
+		userRoutes.GET("/login", m.EnsureNotLoggedIn(), userView.ShowLoginPage)
+		userRoutes.POST("/login", m.EnsureNotLoggedIn(), userView.PerformLogin)
+		userRoutes.GET("/logout", m.EnsureLoggedIn(), userView.Logout)
+		userRoutes.GET("/register", m.EnsureNotLoggedIn(), userView.ShowRegistrationPage)
+		userRoutes.POST("/register", m.EnsureNotLoggedIn(), userView.Register)
 	}
 
 	articleRoutes := router.Group("/article")

@@ -21,7 +21,7 @@ func TestShowLoginPageAuthenticated(t *testing.T) {
 	// Get a new router
 	r := getRouter(true)
 	// Get a new user resource
-	ur := &UserResource{DB: DB}
+	ur := &UserView{DB: DB}
 
 	// Set the token cookie to simulate an authenticated user
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
@@ -50,7 +50,7 @@ func TestShowLoginPageUnauthenticated(t *testing.T) {
 	// Get a new router
 	r := getRouter(true)
 	// Get a new user resource
-	ur := &UserResource{DB: DB}
+	ur := &UserView{DB: DB}
 
 	// Define the route similar to its definition in the routes file
 	r.GET("/user/login", m.EnsureNotLoggedIn(), ur.ShowLoginPage)
@@ -79,7 +79,7 @@ func TestLoginAuthenticated(t *testing.T) {
 	// Get a new router
 	r := getRouter(true)
 	// Get a new user resource
-	ur := &UserResource{DB: DB}
+	ur := &UserView{DB: DB}
 
 	// Set the token cookie to simulate an authenticated user
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
@@ -112,7 +112,7 @@ func TestLoginUnauthenticated(t *testing.T) {
 	// Get a new router
 	r := getRouter(true)
 	// Get a new user resource
-	ur := &UserResource{DB: DB}
+	ur := &UserView{DB: DB}
 
 	// Define the route similar to its definition in the routes file
 	r.POST("/user/login", m.EnsureNotLoggedIn(), ur.PerformLogin)
@@ -149,7 +149,7 @@ func TestLoginUnauthenticatedIncorrectCredentials(t *testing.T) {
 	// Get a new router
 	r := getRouter(true)
 	// Get a new user resource
-	ur := &UserResource{DB: DB}
+	ur := &UserView{DB: DB}
 
 	// Define the route similar to its definition in the routes file
 	r.POST("/user/login", m.EnsureNotLoggedIn(), ur.PerformLogin)
@@ -178,7 +178,7 @@ func TestShowRegistrationPageAuthenticated(t *testing.T) {
 	// Get a new router
 	r := getRouter(true)
 	// Get a new user resource
-	ur := &UserResource{DB: DB}
+	ur := &UserView{DB: DB}
 
 	// Set the token cookie to simulate an authenticated user
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
@@ -206,7 +206,7 @@ func TestShowRegistrationPageUnauthenticated(t *testing.T) {
 	// Get a new router
 	r := getRouter(true)
 	// Get a new user resource
-	ur := &UserResource{DB: DB}
+	ur := &UserView{DB: DB}
 
 	// Define the route similar to its definition in the routes file
 	r.GET("/user/register", m.EnsureNotLoggedIn(), ur.ShowRegistrationPage)
@@ -235,7 +235,7 @@ func TestRegisterAuthenticated(t *testing.T) {
 	// Get a new router
 	r := getRouter(true)
 	// Get a new user resource
-	ur := &UserResource{DB: DB}
+	ur := &UserView{DB: DB}
 
 	// Set the token cookie to simulate an authenticated user
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
@@ -268,7 +268,7 @@ func TestRegisterUnauthenticated(t *testing.T) {
 	// Get a new router
 	r := getRouter(true)
 	// Get a new user resource
-	ur := &UserResource{DB: DB}
+	ur := &UserView{DB: DB}
 
 	// Define the route similar to its definition in the routes file
 	r.POST("/user/register", m.EnsureNotLoggedIn(), ur.Register)
@@ -305,7 +305,7 @@ func TestRegisterUnauthenticatedUnavailableUsername(t *testing.T) {
 	// Get a new router
 	r := getRouter(true)
 	// Get a new user resource
-	ur := &UserResource{DB: DB}
+	ur := &UserView{DB: DB}
 
 	// Define the route similar to its definition in the routes file
 	r.POST("/user/register", m.EnsureNotLoggedIn(), ur.Register)
