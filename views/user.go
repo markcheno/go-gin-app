@@ -9,8 +9,8 @@ import (
 	"github.com/markcheno/go-gin-app/models"
 )
 
-// GenerateSessionToken create session token
-func GenerateSessionToken() string {
+// generateSessionToken create session token
+func generateSessionToken() string {
 	// DO NOT USE THIS IN PRODUCTION
 	return strconv.FormatInt(rand.Int63(), 16)
 }
@@ -35,7 +35,7 @@ func (u *UserResource) PerformLogin(c *gin.Context) {
 
 	if models.IsUserValid(username, password) {
 
-		token := GenerateSessionToken()
+		token := generateSessionToken()
 		c.SetCookie("token", token, 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
 		render(c,
@@ -73,7 +73,7 @@ func (u *UserResource) Register(c *gin.Context) {
 
 	if _, err := models.RegisterNewUser(username, password); err == nil {
 		// If the user is created, set the token in a cookie and log the user in
-		token := GenerateSessionToken()
+		token := generateSessionToken()
 		c.SetCookie("token", token, 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
 
