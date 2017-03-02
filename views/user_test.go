@@ -28,10 +28,10 @@ func TestShowLoginPageAuthenticated(t *testing.T) {
 
 	// Define the route similar to its definition in the routes file
 
-	r.GET("/u/login", m.EnsureNotLoggedIn(), ur.ShowLoginPage)
+	r.GET("/user/login", m.EnsureNotLoggedIn(), ur.ShowLoginPage)
 
 	// Create a request to send to the above route
-	req, _ := http.NewRequest("GET", "/u/login", nil)
+	req, _ := http.NewRequest("GET", "/user/login", nil)
 	req.Header = http.Header{"Cookie": w.HeaderMap["Set-Cookie"]}
 
 	// Create the service and process the above request.
@@ -53,10 +53,10 @@ func TestShowLoginPageUnauthenticated(t *testing.T) {
 	ur := &UserResource{DB: DB}
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/u/login", m.EnsureNotLoggedIn(), ur.ShowLoginPage)
+	r.GET("/user/login", m.EnsureNotLoggedIn(), ur.ShowLoginPage)
 
 	// Create a request to send to the above route
-	req, _ := http.NewRequest("GET", "/u/login", nil)
+	req, _ := http.NewRequest("GET", "/user/login", nil)
 
 	testHTTPResponse(t, r, req, func(w *httptest.ResponseRecorder) bool {
 		// Test that the http status code is 200
@@ -85,11 +85,11 @@ func TestLoginAuthenticated(t *testing.T) {
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/login", m.EnsureNotLoggedIn(), ur.PerformLogin)
+	r.POST("/user/login", m.EnsureNotLoggedIn(), ur.PerformLogin)
 
 	// Create a request to send to the above route
 	loginPayload := getLoginPOSTPayload()
-	req, _ := http.NewRequest("POST", "/u/login", strings.NewReader(loginPayload))
+	req, _ := http.NewRequest("POST", "/user/login", strings.NewReader(loginPayload))
 	req.Header = http.Header{"Cookie": w.HeaderMap["Set-Cookie"]}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Content-Length", strconv.Itoa(len(loginPayload)))
@@ -115,11 +115,11 @@ func TestLoginUnauthenticated(t *testing.T) {
 	ur := &UserResource{DB: DB}
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/login", m.EnsureNotLoggedIn(), ur.PerformLogin)
+	r.POST("/user/login", m.EnsureNotLoggedIn(), ur.PerformLogin)
 
 	// Create a request to send to the above route
 	loginPayload := getLoginPOSTPayload()
-	req, _ := http.NewRequest("POST", "/u/login", strings.NewReader(loginPayload))
+	req, _ := http.NewRequest("POST", "/user/login", strings.NewReader(loginPayload))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Content-Length", strconv.Itoa(len(loginPayload)))
 
@@ -152,11 +152,11 @@ func TestLoginUnauthenticatedIncorrectCredentials(t *testing.T) {
 	ur := &UserResource{DB: DB}
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/login", m.EnsureNotLoggedIn(), ur.PerformLogin)
+	r.POST("/user/login", m.EnsureNotLoggedIn(), ur.PerformLogin)
 
 	// Create a request to send to the above route
 	loginPayload := getRegistrationPOSTPayload()
-	req, _ := http.NewRequest("POST", "/u/login", strings.NewReader(loginPayload))
+	req, _ := http.NewRequest("POST", "/user/login", strings.NewReader(loginPayload))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Content-Length", strconv.Itoa(len(loginPayload)))
 
@@ -184,10 +184,10 @@ func TestShowRegistrationPageAuthenticated(t *testing.T) {
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/u/register", m.EnsureNotLoggedIn(), ur.ShowRegistrationPage)
+	r.GET("/user/register", m.EnsureNotLoggedIn(), ur.ShowRegistrationPage)
 
 	// Create a request to send to the above route
-	req, _ := http.NewRequest("GET", "/u/register", nil)
+	req, _ := http.NewRequest("GET", "/user/register", nil)
 	req.Header = http.Header{"Cookie": w.HeaderMap["Set-Cookie"]}
 
 	// Create the service and process the above request.
@@ -209,10 +209,10 @@ func TestShowRegistrationPageUnauthenticated(t *testing.T) {
 	ur := &UserResource{DB: DB}
 
 	// Define the route similar to its definition in the routes file
-	r.GET("/u/register", m.EnsureNotLoggedIn(), ur.ShowRegistrationPage)
+	r.GET("/user/register", m.EnsureNotLoggedIn(), ur.ShowRegistrationPage)
 
 	// Create a request to send to the above route
-	req, _ := http.NewRequest("GET", "/u/register", nil)
+	req, _ := http.NewRequest("GET", "/user/register", nil)
 
 	testHTTPResponse(t, r, req, func(w *httptest.ResponseRecorder) bool {
 		// Test that the http status code is 200
@@ -241,11 +241,11 @@ func TestRegisterAuthenticated(t *testing.T) {
 	http.SetCookie(w, &http.Cookie{Name: "token", Value: "123"})
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/register", m.EnsureNotLoggedIn(), ur.Register)
+	r.POST("/user/register", m.EnsureNotLoggedIn(), ur.Register)
 
 	// Create a request to send to the above route
 	registrationPayload := getRegistrationPOSTPayload()
-	req, _ := http.NewRequest("POST", "/u/register", strings.NewReader(registrationPayload))
+	req, _ := http.NewRequest("POST", "/user/register", strings.NewReader(registrationPayload))
 	req.Header = http.Header{"Cookie": w.HeaderMap["Set-Cookie"]}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Content-Length", strconv.Itoa(len(registrationPayload)))
@@ -271,11 +271,11 @@ func TestRegisterUnauthenticated(t *testing.T) {
 	ur := &UserResource{DB: DB}
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/register", m.EnsureNotLoggedIn(), ur.Register)
+	r.POST("/user/register", m.EnsureNotLoggedIn(), ur.Register)
 
 	// Create a request to send to the above route
 	registrationPayload := getRegistrationPOSTPayload()
-	req, _ := http.NewRequest("POST", "/u/register", strings.NewReader(registrationPayload))
+	req, _ := http.NewRequest("POST", "/user/register", strings.NewReader(registrationPayload))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Content-Length", strconv.Itoa(len(registrationPayload)))
 
@@ -308,11 +308,11 @@ func TestRegisterUnauthenticatedUnavailableUsername(t *testing.T) {
 	ur := &UserResource{DB: DB}
 
 	// Define the route similar to its definition in the routes file
-	r.POST("/u/register", m.EnsureNotLoggedIn(), ur.Register)
+	r.POST("/user/register", m.EnsureNotLoggedIn(), ur.Register)
 
 	// Create a request to send to the above route
 	registrationPayload := getLoginPOSTPayload()
-	req, _ := http.NewRequest("POST", "/u/register", strings.NewReader(registrationPayload))
+	req, _ := http.NewRequest("POST", "/user/register", strings.NewReader(registrationPayload))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Content-Length", strconv.Itoa(len(registrationPayload)))
 

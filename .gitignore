@@ -22,9 +22,11 @@ _testmain.go
 *.exe
 *.test
 *.prof
+*.db
 
 app
 .vscode
 debug
 tmp/*
 vendor/*
+go-gin-app
